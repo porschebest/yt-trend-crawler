@@ -1,4 +1,4 @@
-# Youtube-Trend-Crawler
+# Youtube-Trends-Crawler
 A crawler to get the latest hot video information from https://www.youtube.com/feed/trending
 
 Required modules: openpyxl, bs4, requests, pandas, numpy, datetime
