@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import pandas as pd
 import numpy as np
+import datetime as dt
 
 # First Step
 response = requests.get('https://www.youtube.com/feed/trending')
@@ -50,36 +51,32 @@ for i,v in enumerate(data):
 
 # export to xlsx or csv
 # df.to_csv('yt.csv',index=False)
-df.to_excel('yt.xlsx',index=False)
+file_name = str(dt.date.today()) + '-youtubeTrendsVideo.xlsx'
+df.to_excel(file_name,index=False)
 
 
 '''
-<a class="yt-uix-sessionlink spf-link "
-data-sessionlink="itct=CAoQ3DAYHSITCPSayYOSsNoCFU9ZYAod9GAMZSjpHg"
-href="/channel/UCvmEITnUDxirhD5VUOFt_4w">KenHo1勁好玩</a>
-<a aria-describedby="description-id-12652"
-class="yt-uix-tile-link yt-ui-ellipsis yt-ui-ellipsis-2 yt-uix-sessionlink spf-link "
-data-sessionlink="itct=CAoQ3DAYHCITCJD94uWDsNoCFQJhKgodQG4JiijpHjIMdHJlbmRpbmctdHJiWgpGRXRyZW5kaW5n"
-dir="ltr" href="/watch?v=Q2XNeZkoq50"
-title="鋁箔紙金屬球裡面真實結構？What's INSIDE?（Aluminium Foil Ball）">
-鋁箔紙金屬球裡面真實結構？What's INSIDE?（Aluminium Foil Ball）
-</a>
-'''
+Target text Template
 
-'''
-<button class="yt-uix-button yt-uix-button-size-small yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup addto-button video-actions spf-nolink hide-until-delayloaded addto-watch-later-button-sign-in yt-uix-tooltip" data-button-menu-id="shared-addto-watch-later-login" data-video-ids="EBORaypI8VI" onclick=";return false;" role="button" title="稍後觀看" type="button"><span class="yt-uix-button-arrow yt-sprite"></span></button>
-<button class="yt-uix-button yt-uix-button-size-small yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup addto-button addto-queue-button video-actions spf-nolink hide-until-delayloaded addto-tv-queue-button yt-uix-tooltip" data-style="tv-queue" data-video-ids="EBORaypI8VI" onclick=";return false;" title="候播清單" type="button"></button>
-</div><div class="yt-lockup-content"><h3 class="yt-lockup-title "><a aria-describedby="description-id-188415" class="yt-uix-tile-link yt-ui-ellipsis yt-ui-ellipsis-2 yt-uix-sessionlink spf-link " data-sessionlink="itct=CAoQ3DAYGyITCNChtLf1tNoCFYFmKgodaEcJ5CjpHjIMdHJlbmRpbmctdHJiWgpGRXRyZW5kaW5n" dir="ltr" href="/watch?v=EBORaypI8VI" title="我的男孩第16集預告">我的男孩第16集預告</a><span class="accessible-description" id="description-id-188415"> - 播放時間：0:29。</span></h3><div class="yt-lockup-byline ">
-<a class="yt-uix-sessionlink spf-link " data-sessionlink="itct=CAoQ3DAYGyITCNChtLf1tNoCFYFmKgodaEcJ5CjpHg" href="/channel/UCvgNKuXdfNGNaEKoG4nNwRA">snsdexo love</a>
+</div><div class="yt-lockup-content">
+<h3 class="yt-lockup-title ">
+    <a aria-describedby="description-id-188415" class="yt-uix-tile-link yt-ui-ellipsis yt-ui-ellipsis-2 yt-uix-sessionlink spf-link " data-sessionlink="itct=CAoQ3DAYGyITCNChtLf1tNoCFYFmKgodaEcJ5CjpHjIMdHJlbmRpbmctdHJiWgpGRXRyZW5kaW5n" dir="ltr" href="/watch?v=EBORaypI8VI" title="我的男孩第16集預告">
+    我的男孩第16集預告
+    </a>
+    <span class="accessible-description" id="description-id-188415"> - 播放時間：0:29。</span>
+</h3>
+<div class="yt-lockup-byline ">
+    <a class="yt-uix-sessionlink spf-link " data-sessionlink="itct=CAoQ3DAYGyITCNChtLf1tNoCFYFmKgodaEcJ5CjpHg" href="/channel/UCvgNKuXdfNGNaEKoG4nNwRA">
+        snsdexo love
+    </a>
 </div>
 <div class="yt-lockup-meta ">
-<ul class="yt-lockup-meta-info">
-<li>5 天前</li>
-<li>觀看次數：128,408</li>
-</ul>
+    <ul class="yt-lockup-meta-info">
+        <li>5 天前</li>
+        <li>觀看次數：128,408</li>
+    </ul>
 </div>
 <div class="yt-lockup-description yt-ui-ellipsis yt-ui-ellipsis-2" dir="ltr">
-我的男孩  林心如 X 張軒睿<br/>下禮拜五晚間十點台視
+    我的男孩  林心如 X 張軒睿<br/>下禮拜五晚間十點台視
 </div></div></div></div></div></li></ul></div></div><div class="feed-item-dismissal-notices"></div></div></li>
-
 '''
