@@ -1,30 +1,32 @@
 # yt-trend-crawler
 A crawler to get the latest hot video information from https://www.youtube.com/feed/trending
 Required modules: openpyxl, bs4, requests, pandas, numpy, datetime
+
 Please run `pip3 install + <module_name>` to install these modules if needed.
 
-Note: This script works only in Traditional Chinese Environment, Please substitute local language to "觀看次數：" which means the views of the video.
+Note: This script works only in Traditional Chinese Environment, Please substitute local language to "觀看次數：" which refers to the views of the video.
 
-### The whole crawler can split into 5 parts:
+## The whole crawler can split into 5 parts:
 1. Crawl Hot Video infos from YouTube.
 2. Get the part that we are interested.
 3. Store these parts into lists.
 4. Store everything from lists in to DataFrame.
 5. Get the correct file name and Export
 
-#### Part 1 - Crawl Hot Video infos from YouTube
+
+### Part 1 - Crawl Hot Video infos from YouTube
 To do this, I used `requests` and `BeautifulSoup` modules. More information can be found in this documentation https://www.crummy.com/software/BeautifulSoup/bs4/doc/
 
 After getting the response from the url, I would look at our target text, I stored a target text's Template at the end of the ".py" file.
 
-#### Part 2 - Get the part that we are interested
+### Part 2 - Get the part that we are interested
 To do this, I used `.find()` and `.find_all()` functions.
 - `.find()` is a function that scans through the entire document looking for *only one* result.
 - `.find_all()` is a function that scans through the entire document looking for results.
 All the examples can be found in BeautifulSoup's documentation document.
 - `.get_text()` is a useful function that can extract the text within the tag.
 
-#### Part 3 - Store these parts into lists
+### Part 3 - Store these parts into lists
 - Title, Author and Length data
 I use the `.append()` function to gather everything in a list. However, I came to realize that all of the contents(title, author, length) are in the same lists. I have to find a way to extract all of them.
 
@@ -35,7 +37,7 @@ Another problem is that the video length data contains '\n\n' which is bad if we
 - Date, Views data
 This part is same as what I did in Title, Author, Length data.
 
-#### Part 4 - Store everything from lists in to DataFrame
+### Part 4 - Store everything from lists in to DataFrame
 I use `pd.DataFrame()` to import the first list into DataFrame. You can reference this Stackoverflow article: https://stackoverflow.com/questions/19112398/getting-list-of-lists-into-pandas-dataframe
 
 As to follow the DRY(Don't Repeat Yourself) rule, for the rest of the list in the code, I write a function that imports everything implied in `data_header` and `data` this two lists.
