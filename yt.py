@@ -15,7 +15,6 @@ title = []
 author = []
 for link in soup.find(role="main").find_all(attrs={"class": "yt-uix-sessionlink"}):
     all_text.append(link.get_text())
-print(all_text)
 
 # Separate all_text into three part
 delta = len(all_text)/3
@@ -23,10 +22,14 @@ def extract_from_all(start,step,target):
     li = np.arange(start,len(all_text),3)
     for i in li:
         target.append(all_text[i])
-    print(target)
-extract_from_all(1,delta,length)
-extract_from_all(2,delta,title)
-extract_from_all(3,delta,author)
+extract_from_all(0,delta,length)
+extract_from_all(1,delta,title)
+extract_from_all(2,delta,author)
+
+# delete /n/n from length
+length_n = []
+for i in length:
+    length_n.append(i.split('\n\n')[1])
 
 # Separate date and views
 date = []
@@ -36,7 +39,18 @@ for link in soup.find(role="main").find_all(attrs={"class": "yt-lockup-meta-info
     views.append(link.get_text().split('觀看次數：')[1])
 
 # Hot Video time
+header = ['title']
+df = pd.DataFrame(title,columns=header)
+def import_data(title,data):
+    df[title] = data
+data_header = [ 'author', 'length', 'release_date', 'views']
+data = [author,length_n, date, views]
+for i,v in enumerate(data):
+    import_data(data_header[i],v)
 
+# export to xlsx or csv
+# df.to_csv('yt.csv',index=False)
+df.to_excel('yt.xlsx',index=False)
 
 
 '''
