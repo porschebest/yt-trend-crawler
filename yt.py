@@ -4,12 +4,12 @@ import pandas as pd
 import numpy as np
 import datetime as dt
 
-# First Step
+# Part 1 - Crawl Hot Video infos from YouTube
 response = requests.get('https://www.youtube.com/feed/trending')
 html = response.text
 soup = BeautifulSoup(html, 'html.parser')
 
-# Hot Video Author
+# Part 2 - Get the part that we are interested - Title, Length, Author
 all_text = []
 length = []
 title = []
@@ -17,7 +17,7 @@ author = []
 for link in soup.find(role="main").find_all(attrs={"class": "yt-uix-sessionlink"}):
     all_text.append(link.get_text())
 
-# Separate all_text into three part
+# Part 3 - Store these parts into lists
 delta = len(all_text)/3
 def extract_from_all(start,step,target):
     li = np.arange(start,len(all_text),3)
@@ -32,14 +32,14 @@ length_n = []
 for i in length:
     length_n.append(i.split('\n\n')[1])
 
-# Separate date and views
+# Part 3 - Store these parts into lists - date, views
 date = []
 views = []
 for link in soup.find(role="main").find_all(attrs={"class": "yt-lockup-meta-info"}):
     date.append(link.get_text().split('觀看次數：')[0])
     views.append(link.get_text().split('觀看次數：')[1])
 
-# Hot Video time
+# Part 4 - Store everything from lists in to DataFrame
 header = ['title']
 df = pd.DataFrame(title,columns=header)
 def import_data(title,data):
@@ -49,7 +49,7 @@ data = [author,length_n, date, views]
 for i,v in enumerate(data):
     import_data(data_header[i],v)
 
-# export to xlsx or csv
+# Part 5 - Get the right file name and Export
 # df.to_csv('yt.csv',index=False)
 file_name = str(dt.date.today()) + '-youtubeTrendsVideo.xlsx'
 df.to_excel(file_name,index=False)
